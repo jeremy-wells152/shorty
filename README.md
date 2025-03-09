@@ -75,7 +75,7 @@ POST /shorten
 
 ```json
 {
-  "shortUrl": "http://localhost:8000/aB3x9Z"
+  "id": "aB3x9Z"
 }
 ```
 
