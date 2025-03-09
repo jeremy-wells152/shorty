@@ -23,6 +23,7 @@ jobs:
           username: ${{ secrets.HOST_USER }}
           key: ${{ secrets.HOST_SSH_KEY }}
           script: |
+            export PATH=$PATH:/opt/homebrew/bin
             docker pull wormygels/shorty:latest
             docker stop shorty || true
             docker rm shorty || true
