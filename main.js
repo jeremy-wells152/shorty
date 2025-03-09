@@ -1,12 +1,4 @@
-const express = require("express");
-const app = express();
+import app from "./src/app.js";
 
-const PORT = process.env.PORT || 8000;
-
-app.get("/", (req, res) => {
-  res.send("Hello World from Dockerized Node.js!");
-});
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const PORT = 8000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
