@@ -16,3 +16,14 @@ jobs:
         run: docker build -t wormygels/shorty:latest .
       - name: Push
         run: docker push wormygels/shorty:latest
+      - name: Deploy
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.HOST_IP }}
+          username: ${{ secrets.HOST_USER }}
+          key: ${{ secrets.HOST_SSH_KEY }}
+          script: |
+            docker pull wormygels/shorty:latest
+            docker stop shorty || true
+            docker rm shorty || true
+            docker run -d --name shorty -p 8000:8000 wormygels/shorty:latest
