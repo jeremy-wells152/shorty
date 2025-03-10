@@ -12,7 +12,7 @@ export const shortenUrl = (req, res) => {
 export const redirectUrl = (req, res) => {
     const originalUrl = getOriginalUrl(req.params.id);
     if (!originalUrl) {
-        return res.status(404).json({ error: "Short URL not found" });
+        return res.status(404).send(`${req.params.id} not found!`);
     }
 
     res.redirect(originalUrl);
