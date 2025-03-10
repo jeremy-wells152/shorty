@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 40px;
+        }
+        input {
+            padding: 8px;
+            width: 300px;
+        }
+        button {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        #shortened-url {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>URL Shortener</h2>
+    <input type="text" id="long-url" placeholder="Enter URL to shorten">
+    <button onclick="shortenUrl()">Shorten</button>
+
+    <div id="shortened-url"></div>
+
+    <script>
+        async function shortenUrl() {
+            const urlInput = document.getElementById("long-url").value;
+            if (!urlInput) {
+                alert("Please enter a URL");
+                return;
+            }
+
+            try {
+                const response = await fetch("/shorten", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ url: urlInput })
+                });
+
+                const data = await response.json();
+                if (data.shortUrl) {
+                    document.getElementById("shortened-url").innerHTML = 
+                        `Shortened URL: <a href="${data.shortUrl}" target="_blank">${data.shortUrl}</a>`;
+                } else {
+                    document.getElementById("shortened-url").innerText = "Error: Unable to shorten URL.";
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById("shortened-url").innerText = "Error: Could not connect to server.";
+            }
+        }
+    </script>
+
+</body>
+</html>
