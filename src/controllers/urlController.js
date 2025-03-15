@@ -1,11 +1,11 @@
 import { createShortUrl, getOriginalUrl } from "../services/urlService.js";
 
 export const shortenUrl = (req, res) => {
-    const { url } = req.body;
+    const { url, expirationTimeSeconds } = req.body;
     if (!url) {
         return res.status(400).json({ error: "URL is required" });
     }
-    const id = createShortUrl(url);
+    const id = createShortUrl(url, expirationTimeSeconds);
     res.json({ id });
 };
 

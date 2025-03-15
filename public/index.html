@@ -27,7 +27,8 @@
 <body>
 
     <h2>URL Shortener</h2>
-    <input type="text" id="long-url" placeholder="Enter URL to shorten">
+    <input type="text" id="long-url" placeholder="Enter URL to shorten"><br><br>
+    <input type="number" id="expiration-time" placeholder="Expiration time (seconds)" min="1"><br><br>
     <button onclick="shortenUrl()">Shorten</button>
 
     <div id="shortened-url"></div>
@@ -35,16 +36,22 @@
     <script>
         async function shortenUrl() {
             const urlInput = document.getElementById("long-url").value;
+            const expirationInput = document.getElementById("expiration-time").value;
             if (!urlInput) {
                 alert("Please enter a URL");
                 return;
+            }
+
+            const requestBody = { url: urlInput };
+            if (expirationInput) {
+                requestBody.expirationTimeSeconds = parseInt(expirationInput, 10);
             }
 
             try {
                 const response = await fetch("/shorten", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ url: urlInput })
+                    body: JSON.stringify(requestBody)
                 });
 
                 const data = await response.json();
