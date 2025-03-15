@@ -22,9 +22,26 @@
             margin-top: 20px;
             font-weight: bold;
         }
+        body.dark {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        body.dark input, body.dark button {
+            background-color: #333333;
+            color: #ffffff;
+            border: 1px solid #ffffff;
+        }
     </style>
 </head>
 <body>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.classList.add('dark');
+            }
+        });
+    </script>
 
     <h2>URL Shortener</h2>
     <input type="text" id="long-url" placeholder="Enter URL to shorten"><br><br>
